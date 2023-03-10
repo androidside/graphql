@@ -1,0 +1,43 @@
+type Query {
+  job(id: ID!): Job
+  company(id: ID!): Company
+  jobs: [Job!] # Array that can't be empty
+}
+
+type Company {
+  id: ID! # Exalamation mark mandatory
+  name: String!
+  description: String
+  jobs: [Job!]
+}
+
+type Job {
+  id: ID!
+  title: String!
+  company: Company!
+  description: String
+}
+
+type Mutation {
+  # : Job -> Returns a Job object
+  #Syntax is the same as  Queries
+  createJob(input: CreateJobInput!): Job
+
+  #Delete a Job Mutation
+  deleteJob(id: ID!): Job
+
+  #Update a Job Mutation
+  updateJob(input: UpdateJobInput!): Job
+}
+
+input UpdateJobInput {
+  id: ID!
+  title: String!
+  description: String
+}
+
+#Objects of this type can only be used as input arguments
+input CreateJobInput {
+  title: String!
+  description: String
+}
