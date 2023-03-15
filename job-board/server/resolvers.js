@@ -7,11 +7,25 @@ function rejectIf(condition) {
 }
 export const resolvers = {
   Query: {
-    job: (_root, { id }) => Job.findById(id),
+    //TODOPLANE Job route protected?
+    job: (_root, { id }, { user }) => {
+      console.log('context: ', user);
+      console.log('[Query Job()]: ');
+      rejectIf(!user);
+
+      // rejectIf(!user);
+      return Job.findById(id);
+    },
     //root is the parent object, we don't use it,
     //that's why we prefix it with an underscore
-    jobs: async () => Job.findAll(),
-    company: (_root, { id }) => Company.findById(id),
+    jobs: async () => {
+      console.log('[Query Jobs()]: ');
+      return Job.findAll();
+    },
+    company: (_root, { id }) => {
+      console.log('[Query Jobs()] id: ', id);
+      return Company.findById(id);
+    },
   },
 
   //We want a to include a jobs object nested inside

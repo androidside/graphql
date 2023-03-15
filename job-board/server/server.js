@@ -38,9 +38,10 @@ const context = async ({ req }) => {
   //auth { sub: 'uogQAZnLcAlT6lMuNbpQg', iat: 1678331412 }
   if (req.auth) {
     const user = await User.findById(req.auth.sub);
-    console.log(user);
+    console.log('[serverJS user]: ', user);
     return { user };
   }
+  console.log('[serverJS no req.auth]');
   return {};
 };
 const apolloServer = new ApolloServer({ typeDefs, resolvers, context });

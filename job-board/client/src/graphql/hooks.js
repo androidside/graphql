@@ -49,7 +49,10 @@ export function useJobCreate(job) {
 export function useJob(id) {
   const { data, loading, error } = useQuery(JOB_QUERY, {
     variables: { id },
+    context: { headers: { Authorization: 'Bearer ' + getAccessToken() } },
   });
+  console.log('useJob Returned Data = ', data);
+
   return { job: data?.job, loading, error: Boolean(error) };
 }
 
@@ -57,6 +60,7 @@ export function useJobs() {
   const { data, loading, error } = useQuery(JOBS_QUERY, {
     fetchPolicy: 'network-only',
   });
+  console.log('useJobs Returned Data = ', data);
   return {
     //Data can be undefined if it's still loading, that's why we use the
     // optional data chaining operation ?

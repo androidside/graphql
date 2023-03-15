@@ -2,6 +2,9 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { useJobCreate } from '../graphql/hooks';
 
+//TODOPLANE Can I navigate to /jobs/new if user is not logged in?
+//My guess is that probably yes but wont be able to submit
+//TODOPLANE Andre: Eliminaremos todos los useState y usaremos Apollo Caching?
 function JobForm() {
   const navigate = useNavigate();
   const [title, setTitle] = useState('');

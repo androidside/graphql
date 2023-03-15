@@ -5,7 +5,9 @@ const GRAPHQL_URL = 'http://localhost:9000/graphql';
 //Feeds into ApolloProvider to make it available throughout the app
 export const client = new ApolloClient({
   uri: GRAPHQL_URL,
-  cache: new InMemoryCache(),
+  //cache: new InMemoryCache(),
+  cache: 'no-cache',
+
   //If we want to change the default policy for all queries
   // defaultOptions: {
   //   query: {
