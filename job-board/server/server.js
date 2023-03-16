@@ -1,4 +1,6 @@
-import { ApolloServer } from 'apollo-server-express';
+import { ApolloServer } from '@apollo/server';
+import { expressMiddleware as apolloExpress } from '@apollo/server/express4';
+
 import cors from 'cors';
 import express from 'express';
 import { expressjwt } from 'express-jwt';
@@ -44,11 +46,14 @@ const context = async ({ req }) => {
   console.log('[serverJS no req.auth]');
   return {};
 };
-const apolloServer = new ApolloServer({ typeDefs, resolvers, context });
+const apolloServer = new ApolloServer({ typeDefs, resolvers });
 await apolloServer.start();
 //Plug apollo server into our Express application
 //Any http request sent to graphql will be re-routed by the Express framework to the graph QL server
-apolloServer.applyMiddleware({ app, path: '/graphql' });
+//Apollo 3
+//apolloServer.applyMiddleware({ app, path: '/graphql' });
+//Apollo 4
+app.use('/graphql', apolloExpress(apolloServer, { context: context }));
 
 app.listen({ port: PORT }, () => {
   console.log(`Server running on port ${PORT}`);
